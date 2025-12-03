@@ -13,9 +13,9 @@ class Game
   # blank board display to console
   def display_board(board)
     puts "\r"
-    puts "#{board[0][0]} | #{board[0][1]} |#{board[0][2]}"
-    puts "#{board[1][0]} | #{board[1][1]} |#{board[2][2]}"
-    puts "#{board[2][0]} | #{board[2][1]} |#{board[2][2]}"
+    puts "#{board[0][0]} | #{board[0][1]} | #{board[0][2]}"
+    puts "#{board[1][0]} | #{board[1][1]} | #{board[2][2]}"
+    puts "#{board[2][0]} | #{board[2][1]} | #{board[2][2]}"
     puts "\r"
   end
 
@@ -35,7 +35,7 @@ class Game
     coord_two = input_array[1].to_i
 
     # loop unitl the user input is valid - has space, between 0 and 2, board slot is free
-    until input.match(/\s/) && coord_one.between(0, 2) && coord_two.between(0, 2) && @board[coord_one][coord_two] == '*'
+    until input.match(/\s/) && coord_one.between?(0, 2) && coord_two.between?(0, 2) && @board[coord_one][coord_two] == '*'
             puts "Please enter valid coordinates for an empty space in the grid"
             input = gets.chomp
             input_array = input.split
@@ -134,3 +134,7 @@ puts '0 0 | 0 1 | 0 2'
 puts '1 0 | 1 1 | 1 2'
 puts '2 0 | 2 1 | 2 2'
 puts "\r\n"
+
+# instantiate Game and execute play game
+game = Game.new
+game.play_game
