@@ -10,6 +10,15 @@ class Game
     @board = Array.new(3){Array.new(3,'*')}
   end
 
+  # blank board display to console
+  def display_board(board)
+    puts "\r"
+    puts "#{board[0][0]} | #{board[0][1]} |#{board[0][2]}"
+    puts "#{board[1][0]} | #{board[1][1]} |#{board[2][2]}"
+    puts "#{board[2][0]} | #{board[2][1]} |#{board[2][2]}"
+    puts "\r"
+  end
+
 end
 
 #instructions
