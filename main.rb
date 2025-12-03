@@ -33,6 +33,16 @@ class Game
     input_array = input.split
     coord_one = input_array[0].to_i
     coord_two = input_array[1].to_i
+
+    # loop unitl the user input is valid - has space, between 0 and 2, board slot is free
+    until input.match(/\s/) && coord_one.between(0, 2) && coord_two.between(0, 2) && @board[coord_one][coord_two] == '*'
+            puts "Please enter valid coordinates for an empty space in the grid"
+            input = gets.chomp
+            input_array = input.split
+            coord_one = input_array[0].to_i
+            coord_two = input_array[1].to_i
+    end 
+
     add_to_board(coord_one, coord_two, symbol)
   end
 end
