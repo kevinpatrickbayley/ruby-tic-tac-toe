@@ -21,7 +21,7 @@ class Game
 
   def player_turn(turn)
     if turn.odd?
-      player_choice(@player_one_name, '0')
+      player_choice(@player_one_name, 'O')
     else
       player_choice(@player_two_name, 'X')
     end
@@ -50,6 +50,23 @@ class Game
     @board[coord_one][coord_two] = symbol
     @@turn_count += 1
   end
+
+  def three_across
+    @board.each do |i|
+      if i.all? {|j| j == 'X'}
+        @@winner = 'X'
+        @@turn_count = 10
+      elsif i.all? {|j| j == 'O'}
+        @@winner = '0'
+        @@turn_count = 10
+      else
+        nil
+      end
+    end
+  end
+
+
+
 end
 
 #instructions
