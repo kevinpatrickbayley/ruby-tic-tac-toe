@@ -28,7 +28,7 @@ class Game
   end
 
   def player_choice(player, symbol)
-    puts "#{player} please enter your coorinates seperated byy a space."
+    puts "#{player} please enter your coordinates seperated by a space."
     input = gets.chomp
     input_array = input.split
     coord_one = input_array[0].to_i
@@ -44,6 +44,11 @@ class Game
     end 
 
     add_to_board(coord_one, coord_two, symbol)
+  end
+
+  def add_to_board(coord_one, coord_two, symbol)
+    @board[coord_one][coord_two] = symbol
+    @@turn_count += 1
   end
 end
 
