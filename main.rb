@@ -19,6 +19,22 @@ class Game
     puts "\r"
   end
 
+  def player_turn(turn)
+    if turn.odd?
+      player_choice(@player_one_name, '0')
+    else
+      player_choice(@player_two_name, 'X')
+    end
+  end
+
+  def player_choice(player, symbol)
+    puts "#{player} please enter your coorinates seperated byy a space."
+    input = gets.chomp
+    input_array = input.split
+    coord_one = input_array[0].to_i
+    coord_two = input_array[1].to_i
+    add_to_board(coord_one, coord_two, symbol)
+  end
 end
 
 #instructions
