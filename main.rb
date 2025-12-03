@@ -105,6 +105,25 @@ class Game
       puts "It's a tie!"
     end
   end
+
+  def play_game
+    puts "\r\n"
+    puts 'Here is your empty battlefield!'
+    puts "\r\n"
+    display_board(@board)
+    puts "\r\n"
+
+    until @@turn_count >= 10 do
+      player_turn(@@turn_count)
+      three_across
+      three_down
+      three_diagonal
+      display_board(@board)
+    end
+
+    declare_result(@@winner)
+  end
+
 end
 
 #instructions
