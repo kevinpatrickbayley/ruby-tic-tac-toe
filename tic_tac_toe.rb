@@ -1,6 +1,5 @@
 class Game
-  @@turn_count = 1
-  @@winner = ''
+  attr_accessor :turn_count, :winner
 
   def initialize
     puts 'Player 1, enter your name!'
@@ -8,6 +7,8 @@ class Game
     puts 'Player 2, enter your name!'
     @player_two_name = gets.chomp
     @board = Array.new(3){Array.new(3,'*')}
+    @turn_count = 1
+    @winner = ''
   end
 
   # blank board display to console
@@ -48,17 +49,17 @@ class Game
 
   def add_to_board(coord_one, coord_two, symbol)
     @board[coord_one][coord_two] = symbol
-    @@turn_count += 1
+    @turn_count += 1
   end
 
   def three_across
     @board.each do |i|
       if i.all? {|j| j == 'X'}
-        @@winner = 'X'
-        @@turn_count = 10
+        @winner = 'X'
+        @turn_count = 10
       elsif i.all? {|j| j == 'O'}
-        @@winner = '0'
-        @@turn_count = 10
+        @winner = '0'
+        @turn_count = 10
       else
         nil
       end
@@ -69,11 +70,11 @@ class Game
     flat = @board.flatten
     flat.each_with_index do |v, i|
       if v == 'X' && flat[i + 3] == 'X' && flat[i + 6] == 'X'
-        @@winner = 'X'
-        @@turn_count = 10
+        @winner = 'X'
+        @turn_count = 10
       elsif v == 'O' && flat[i + 3] == 'O' && flat[i + 6] == 'O'
-        @@winner = 'O'
-        @@turn_count = 10
+        @winner = 'O'
+        @turn_count = 10
       else
         nil
       end
@@ -84,11 +85,11 @@ class Game
     center_val = @board[1][1]
     if center_val == 'X' || center_val == 'O'
       if @board[0][0] && @board[2][2] == center_val
-        @@winner = center_val
-        @@turn_count = 10
+        @winner = center_val
+        @turn_count = 10
       elsif @board[2][0] && @board[0][2] == center_val
-        @@winner = center_val
-        @@turn_count = 10
+        @winner = center_val
+        @turn_count = 10
       end
     else
       nil
@@ -113,15 +114,15 @@ class Game
     display_board(@board)
     puts "\r\n"
 
-    until @@turn_count >= 10 do
-      player_turn(@@turn_count)
+    until @turn_count >= 10 do
+      player_turn(@turn_count)
       three_across
       three_down
       three_diagonal
       display_board(@board)
     end
 
-    declare_result(@@winner)
+    declare_result(@winner)
   end
 
 end
