@@ -1,7 +1,7 @@
-#main.rb
-require_relative "tic_tac_toe"
+# main.rb
+require_relative 'tic_tac_toe'
 
-#instructions
+# instructions
 puts 'Welcome to Tic-Tac-Toe!'
 puts 'Each turn, enter two numbers with a space, per the grid layout below:'
 puts "\r\n"

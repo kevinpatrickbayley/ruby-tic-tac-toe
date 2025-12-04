@@ -6,7 +6,7 @@ class Game
     @player_one_name = gets.chomp
     puts 'Player 2, enter your name!'
     @player_two_name = gets.chomp
-    @board = Array.new(3){Array.new(3,'*')}
+    @board = Array.new(3) { Array.new(3, '*') }
     @turn_count = 1
     @winner = ''
   end
@@ -36,13 +36,14 @@ class Game
     coord_two = input_array[1].to_i
 
     # loop unitl the user input is valid - has space, between 0 and 2, board slot is free
-    until input.match(/\s/) && coord_one.between?(0, 2) && coord_two.between?(0, 2) && @board[coord_one][coord_two] == '*'
-            puts "Please enter valid coordinates for an empty space in the grid"
-            input = gets.chomp
-            input_array = input.split
-            coord_one = input_array[0].to_i
-            coord_two = input_array[1].to_i
-    end 
+    until input.match(/\s/) && coord_one.between?(0,
+                                                  2) && coord_two.between?(0, 2) && @board[coord_one][coord_two] == '*'
+      puts 'Please enter valid coordinates for an empty space in the grid'
+      input = gets.chomp
+      input_array = input.split
+      coord_one = input_array[0].to_i
+      coord_two = input_array[1].to_i
+    end
 
     add_to_board(coord_one, coord_two, symbol)
   end
@@ -54,14 +55,12 @@ class Game
 
   def three_across
     @board.each do |i|
-      if i.all? {|j| j == 'X'}
+      if i.all? { |j| j == 'X' }
         @winner = 'X'
         @turn_count = 10
-      elsif i.all? {|j| j == 'O'}
+      elsif i.all? { |j| j == 'O' }
         @winner = '0'
         @turn_count = 10
-      else
-        nil
       end
     end
   end
@@ -75,24 +74,20 @@ class Game
       elsif v == 'O' && flat[i + 3] == 'O' && flat[i + 6] == 'O'
         @winner = 'O'
         @turn_count = 10
-      else
-        nil
       end
     end
   end
 
   def three_diagonal
     center_val = @board[1][1]
-    if center_val == 'X' || center_val == 'O'
-      if @board[0][0] && @board[2][2] == center_val
-        @winner = center_val
-        @turn_count = 10
-      elsif @board[2][0] && @board[0][2] == center_val
-        @winner = center_val
-        @turn_count = 10
-      end
-    else
-      nil
+    return unless %w[X O].include?(center_val)
+
+    if @board[0][0] && @board[2][2] == center_val
+      @winner = center_val
+      @turn_count = 10
+    elsif @board[2][0] && @board[0][2] == center_val
+      @winner = center_val
+      @turn_count = 10
     end
   end
 
@@ -114,7 +109,7 @@ class Game
     display_board(@board)
     puts "\r\n"
 
-    until @turn_count >= 10 do
+    until @turn_count >= 10
       player_turn(@turn_count)
       three_across
       three_down
@@ -124,5 +119,4 @@ class Game
 
     declare_result(@winner)
   end
-
 end
