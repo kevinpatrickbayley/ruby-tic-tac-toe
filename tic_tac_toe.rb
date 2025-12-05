@@ -10,7 +10,7 @@ class Game
     @player_one_name = gets.chomp
     puts 'Player 2, enter your name!'
     @player_two_name = gets.chomp
-    @board = Array.new(3) { Array.new(3, '*') }
+    @board = Array.new(3) { Array.new(3) }
     @turn_count = 1
     @winner = ''
   end
@@ -39,7 +39,7 @@ class Game
   end
 
   def display_cell(val)
-    val.nil? ? ' ' : val # or mapping if you store something else
+    val.nil? ? ' ' : val
   end
 
   public
@@ -60,8 +60,7 @@ class Game
     coord_two = input_array[1].to_i
 
     # loop unitl the user input is valid - has space, between 0 and 2, board slot is free
-    until input.match(/\s/) && coord_one.between?(0,
-                                                  2) && coord_two.between?(0, 2) && @board[coord_one][coord_two] == '*'
+    until input.match(/\s/) && coord_one.between?(0, 2) && coord_two.between?(0, 2) && @board[coord_one][coord_two].nil?
       puts 'Please enter valid coordinates for an empty space in the grid'
       input = gets.chomp
       input_array = input.split
