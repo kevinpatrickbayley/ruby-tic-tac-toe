@@ -15,14 +15,34 @@ class Game
     @winner = ''
   end
 
-  # blank board display to console
+  # board display to console
   def display_board(board)
-    puts "\r"
-    puts "#{board[0][0]} | #{board[0][1]} | #{board[0][2]}"
-    puts "#{board[1][0]} | #{board[1][1]} | #{board[1][2]}"
-    puts "#{board[2][0]} | #{board[2][1]} | #{board[2][2]}"
-    puts "\r"
+    puts "\r\n"
+    puts row_line(board, 0)
+    puts sep_line
+    puts row_line(board, 1)
+    puts sep_line
+    puts row_line(board, 2)
+    puts "\r\n"
   end
+
+  # display_board helpers
+  private
+
+  def row_line(board, row)
+    cells = board[row].map { |c| display_cell(c) }
+    " #{cells[0]} | #{cells[1]} | #{cells[2]} "
+  end
+
+  def sep_line
+    '---+---+---'
+  end
+
+  def display_cell(val)
+    val.nil? ? ' ' : val # or mapping if you store something else
+  end
+
+  public
 
   def player_turn(turn)
     if turn.odd?
