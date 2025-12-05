@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Game manages a console Tic-Tac-Toe match between two players.
+# It handles board display, input, turn sequencing, and win/draw detection.
 class Game
   attr_accessor :turn_count, :winner
 

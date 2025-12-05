@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # main.rb
 require_relative 'tic_tac_toe'
 
