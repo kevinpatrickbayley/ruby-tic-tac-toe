@@ -117,7 +117,6 @@ class Game
     puts 'Here is your empty battlefield!'
     puts "\r\n"
     display_board(@board)
-    puts "\r\n"
 
     until @turn_count >= 10
       player_turn(@turn_count)
