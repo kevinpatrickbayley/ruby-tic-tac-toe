@@ -6,9 +6,14 @@ class Game
   attr_accessor :turn_count, :winner
 
   WIN_LINES = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], # rows
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], # cols
-    [0, 4, 8], [2, 4, 6]             # diagonals
+    [[0, 0], [0, 1], [0, 2]],  # row 0
+    [[1, 0], [1, 1], [1, 2]],  # row 1
+    [[2, 0], [2, 1], [2, 2]],  # row 2
+    [[0, 0], [1, 0], [2, 0]],  # col 0
+    [[0, 1], [1, 1], [2, 1]],  # col 1
+    [[0, 2], [1, 2], [2, 2]],  # col 2
+    [[0, 0], [1, 1], [2, 2]],  # diag
+    [[0, 2], [1, 1], [2, 0]]   # anti-diag
   ].freeze
 
   def initialize
@@ -82,43 +87,26 @@ class Game
     @turn_count += 1
   end
 
-  def three_across
-    @board.each do |i|
-      if i.all? { |j| j == 'X' }
-        @winner = 'X'
+  # returns "X"/"O" or nil
+  def find_winner
+    WIN_LINES.each do |(r1, c1), (r2, c2), (r3, c3)|
+      line = [@board[r1][c1], @board[r2][c2], @board[r3][c3]]
+      if three_equal_filled?(line)
         @turn_count = 10
-      elsif i.all? { |j| j == 'O' }
-        @winner = '0'
-        @turn_count = 10
+        @winner = line.first
       end
     end
+    nil
   end
 
-  def three_down
-    flat = @board.flatten
-    flat.each_with_index do |v, i|
-      if v == 'X' && flat[i + 3] == 'X' && flat[i + 6] == 'X'
-        @winner = 'X'
-        @turn_count = 10
-      elsif v == 'O' && flat[i + 3] == 'O' && flat[i + 6] == 'O'
-        @winner = 'O'
-        @turn_count = 10
-      end
-    end
+  # find_winner helper
+  private
+
+  def three_equal_filled?(cells)
+    cells[0] && cells.uniq.size == 1
   end
 
-  def three_diagonal
-    center_val = @board[1][1]
-    return unless %w[X O].include?(center_val)
-
-    if @board[0][0] && @board[2][2] == center_val
-      @winner = center_val
-      @turn_count = 10
-    elsif @board[2][0] && @board[0][2] == center_val
-      @winner = center_val
-      @turn_count = 10
-    end
-  end
+  public
 
   def declare_result(symbol)
     case symbol
@@ -140,9 +128,7 @@ class Game
 
     until @turn_count >= 10
       player_turn(@turn_count)
-      three_across
-      three_down
-      three_diagonal
+      find_winner
       display_board(@board)
     end
 
